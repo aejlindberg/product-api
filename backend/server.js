@@ -23,12 +23,28 @@ mongoose.connection.once("open", () => console.log("Connected to mongodb"))
 
 // This is the beginning of a model for the Product object.
 const Product = mongoose.model("Product", {
+  id: Number,
   name: String,
+  type: String,
+  size: String,
+  numberInPack: String,
+  substance: String,
+  price: Number,
+  deliveryTime: String,
+  image: String,
+  description: String
   // Add more attributes to your product here.
 })
 
 app.get("/", (req, res) => {
   res.send("Products API")
+})
+
+app.get("/products", (req, res) => {
+  Product.find().then(products => {
+    console.log("Products: ", products)
+    res.json(products)
+  })
 })
 
 // Endpoint to create a product. Send a POST to /products with a JSON body
